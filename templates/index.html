@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nasz system</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.10/spectre.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stan konta: {{ balance }}</h1>
+
+        <h2>Stan magazynu:</h2>
+        <ul>
+            {% for product, details in warehouse.items() %}
+                <li>{{ product }}: Cena: {{ details['price'] }}, Ilość: {{ details['quantity'] }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Zakup produktu:</h2>
+        <form action="/purchase" method="post">
+            <div class="form-group">
+                <label class="form-label" for="name">Nazwa produktu:</label>
+                <input class="form-input" type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="price">Cena:</label>
+                <input class="form-input" type="text" id="price" name="price">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="quantity">Ilość:</label>
+                <input class="form-input" type="text" id="quantity" name="quantity">
+            </div>
+            <button class="btn btn-primary" type="submit">Kup</button>
+        </form>
+
+        <h2>Sprzedaż produktu:</h2>
+        <form action="/sale" method="post">
+            <div class="form-group">
+                <label class="form-label" for="name_sale">Nazwa produktu:</label>
+                <input class="form-input" type="text" id="name_sale" name="name">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="quantity_sale">Ilość:</label>
+                <input class="form-input" type="text" id="quantity_sale" name="quantity">
+            </div>
+            <button class="btn btn-primary" type="submit">Sprzedaj</button>
+        </form>
+
+        <h2>Zmiana salda:</h2>
+        <form action="/change_balance" method="post">
+            <div class="form-group">
+                <label class="form-label" for="amount">Wartość zmiany salda:</label>
+                <input class="form-input" type="text" id="amount" name="amount">
+            </div>
+            <button class="btn btn-primary" type="submit">Zmień saldo</button>
+        </form>
+    </div>
+</body>
+</html>
+
